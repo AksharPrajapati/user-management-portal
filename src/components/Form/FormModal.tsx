@@ -22,7 +22,7 @@ const FormModal: React.FC<FormModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center p-4">
-      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg mx-auto">
+      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-4xl mx-auto h-full max-h-screen overflow-auto">
         <h2 className="text-xl font-semibold mb-4 text-gray-700">Form</h2>
         <Formik
           initialValues={initialValues}
@@ -34,7 +34,9 @@ const FormModal: React.FC<FormModalProps> = ({
         >
           {({ isSubmitting }) => (
             <Form>
-              {formFields}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {formFields}
+              </div>
 
               <div className="flex justify-end space-x-4 mt-6">
                 <button
