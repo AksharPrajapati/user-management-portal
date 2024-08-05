@@ -15,7 +15,8 @@ function RegisterForm() {
 
   const handleUpdate = async (userId: string, userData: IUser) => {
     try {
-      await updateUser(userId, userData);
+      const user = await updateUser(userId, userData);
+      dispatch(addAuthUser(user));
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -30,7 +31,7 @@ function RegisterForm() {
     try {
       if (user) {
         handleUpdate(user?.id, values);
-        dispatch(addAuthUser({ ...values, id: user?.id, role: user?.role }));
+        dispatch(addAuthUser({ ...values, ...user }));
       } else {
         navigate("/");
       }
