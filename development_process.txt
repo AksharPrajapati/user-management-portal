@@ -46,6 +46,7 @@
      - Developed CRUD operations (Create, Read, Update, Delete) for managing employees within each workspace.
      - Implemented user-based routing and protected routes to ensure only authorized users can access certain pages.
      - Admin and workspace users have different levels of access and permissions.
+     - If admin or workspace admin can deactivte the employee or workspace by admin then workspace user should not able to see workspace in detail and employee is not be able to login.
 
 6. **Admin Workflow:**
    - Admin logs in using provided credentials (email and password).
