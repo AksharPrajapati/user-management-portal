@@ -60,7 +60,7 @@ function EmployeeList({ employee }: { employee: IUser[] }) {
 
   return (
     <div>
-      <p className="text-3xl font-bold">Employee List</p>
+      <p className="text-3xl font-bold mb-4">Employee List</p>
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
         <input
           type="text"
@@ -98,7 +98,7 @@ function EmployeeList({ employee }: { employee: IUser[] }) {
       </div>
 
       <div className="flex justify-between items-center mb-4">
-        <div className="hidden sm:flex">
+        <div className="">
           <button
             className={`px-4 py-2 mx-1 border rounded-lg ${
               !girdView ? "bg-gray-200" : "bg-red-500 text-white"
@@ -116,7 +116,7 @@ function EmployeeList({ employee }: { employee: IUser[] }) {
             List View
           </button>
           <button
-            className="px-4 py-2 mx-1 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-200"
+            className="px-4 py-2 mx-1 mt-3 sm:mt-0 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-200"
             onClick={exportToCSV}
           >
             Export as CSV

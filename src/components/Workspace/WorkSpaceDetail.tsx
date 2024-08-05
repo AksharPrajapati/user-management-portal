@@ -14,22 +14,22 @@ function WorkSpaceDetail() {
   const { user } = useSelector((state: any) => state.user);
   const [workspace, setWorkspace] = useState<any>({});
   const [employee, setEmployee] = useState<any>([]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetchWorkspace();
     fetchUsers();
-  }, []);
+  }, [id]); // Depend on `id` to refetch if it changes
 
   const fetchWorkspace = async () => {
     try {
       const data = await getWorkspace(id as string);
-
       user?.role === "admin"
         ? setWorkspace(data)
         : setWorkspace(data.id === user?.workspaceId ? data : null);
-    } catch (err) {}
+    } catch (err) {
+      console.log("Error fetching workspace:", err);
+    }
   };
 
   const fetchUsers = async () => {
@@ -39,16 +39,13 @@ function WorkSpaceDetail() {
         (user: IUser) => user?.role === "employee" && user?.workspaceId === id
       );
       setEmployee(employeeData);
-    } catch (err) {}
+    } catch (err) {
+      console.log("Error fetching users:", err);
+    }
   };
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   const handleSubmit = async (values: IUser) => {
     try {
@@ -57,11 +54,10 @@ function WorkSpaceDetail() {
         role: "employee",
         workspaceId: id,
       });
-
       fetchUsers();
       toast.success("Employee created successfully");
     } catch (err) {
-      console.log(err);
+      console.log("Error creating employee:", err);
       toast.error("Failed to add employee");
     }
   };

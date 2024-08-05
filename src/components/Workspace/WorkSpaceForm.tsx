@@ -8,7 +8,7 @@ import { workspaceValidationSchema } from "../../utils/validationSchema";
 import { toast } from "react-toastify";
 
 const WorkSpaceFormFields: React.FC = () => {
-  const { values } = useFormikContext<IWorkspace>();
+  const { values, setFieldValue } = useFormikContext<IWorkspace>();
   const user = useSelector((state: any) => state.user.user);
 
   return (
@@ -40,7 +40,7 @@ const WorkSpaceFormFields: React.FC = () => {
                 {...field}
                 checked={field.value}
                 disabled={user?.role !== "admin"}
-                onChange={() => form.setFieldValue(field.name, !field.value)}
+                onChange={() => setFieldValue(field.name, !field.value)}
                 className="h-4 w-4 border-gray-300 rounded text-red-600 focus:ring-blue-500"
               />
               <span className="ml-2 text-gray-700">Deactivate</span>
@@ -68,14 +68,15 @@ function WorkSpaceForm({
   workspace: IWorkspace;
   user: IUser;
 }) {
-  const handleSubmit = async (values: IWorkspace) => {
+  const handleSubmit = async (values: IWorkspace, { setSubmitting }: any) => {
     try {
       await updatehWorkspace(workspace?.id as string, values);
       toast.success("Workspace Updated");
     } catch (err) {
-      console.log(err);
+      console.log("Error updating workspace:", err); // Debugging
       toast.error("Something went wrong");
     }
+    setSubmitting(false);
   };
 
   return (
@@ -92,12 +93,11 @@ function WorkSpaceForm({
         }}
         validationSchema={workspaceValidationSchema}
         onSubmit={(values, { setSubmitting }) => {
-          handleSubmit(values);
-          setSubmitting(false);
+          handleSubmit(values, { setSubmitting });
         }}
       >
-        {({ isSubmitting }) => (
-          <form>
+        {({ isSubmitting, handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
             <WorkSpaceFormFields />
             <div className="flex justify-end space-x-4 mt-6">
               <button

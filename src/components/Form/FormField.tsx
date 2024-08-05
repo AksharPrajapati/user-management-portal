@@ -21,7 +21,7 @@ const FormField: React.FC<FormFieldProps> = ({
   rows,
 }) => {
   return (
-    <div className="relative mb-4">
+    <div className="relative mt-8">
       <Field name={name}>
         {({ field }: FieldProps) => (
           <>
@@ -47,7 +47,7 @@ const FormField: React.FC<FormFieldProps> = ({
       </Field>
       <label
         htmlFor={name}
-        className="absolute left-3 -top-2.5 bg-white px-1 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600"
+        className="absolute left-3 -mt-2 -top-2.5 bg-white px-1 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-blue-600"
       >
         {label}
       </label>

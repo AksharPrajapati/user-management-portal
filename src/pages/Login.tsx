@@ -24,17 +24,16 @@ function Login() {
             email: Yup.string()
               .email("Invalid email address")
               .required("Required"),
-            // password: Yup.string()
-            //   .matches(
-            //     /^(?=.*[A-Z])(?=.*\d)(?=.*[@])[A-Za-z\d@]{8,}$/,
-            //     "Password must be at least 8 characters long, include one uppercase letter, one number, and one special character (@)."
-            //   )
-            //   .required("Required"),
+            password: Yup.string()
+              .matches(
+                /^(?=.*[A-Z])(?=.*\d)(?=.*[@])[A-Za-z\d@]{8,}$/,
+                "Password must be at least 8 characters long, include one uppercase letter, one number, and one special character (@)."
+              )
+              .required("Required"),
           })}
           onSubmit={async (values, { setSubmitting }) => {
             try {
               const actionResult = await AuthUser(values);
-              console.log("actionResult", actionResult);
               if (actionResult) {
                 dispatch(addAuthUser(actionResult));
                 navigate("/");

@@ -33,7 +33,7 @@ function Register() {
       try {
         await updateUser(id as string, { ...values, isSubmitted: true });
 
-        dispatch(addAuthUser({ ...values, id, role: "employee" }));
+        dispatch(addAuthUser({ ...values, ...user, id, role: "employee" }));
 
         navigate("/");
       } catch (err) {
