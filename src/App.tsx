@@ -1,6 +1,4 @@
 import React from "react";
-import Body from "./components/Body";
-
 import {
   createBrowserRouter,
   Navigate,
@@ -8,16 +6,20 @@ import {
   useLocation,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Register from "./components/Register";
-import Login from "./components/Login";
+import Body from "./components/Body";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import WorkSpaceDetail from "./components/Workspace/WorkSpaceDetail";
+import EmployeeDetail from "./components/Employee/EmployeeDetail";
 
-const ProtectedRoute: React.FC<{ element: React.ReactElement }> = ({
-  element,
-}) => {
+const ProtectedRoute: React.FC<{
+  element: React.ReactElement;
+}> = ({ element }) => {
   const location = useLocation();
-  const { authUser } = useSelector((state: any) => state.user);
-  if (!authUser) {
-    // Redirect to "/" if not authenticated
+  const { user } = useSelector((state: any) => state.user);
+
+  if (!user?.email) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
@@ -27,10 +29,10 @@ const ProtectedRoute: React.FC<{ element: React.ReactElement }> = ({
 const RedirectIfAuthenticated: React.FC<{ element: React.ReactElement }> = ({
   element,
 }) => {
-  const { authUser } = useSelector((state: any) => state.user);
   const location = useLocation();
+  const { user } = useSelector((state: any) => state.user);
 
-  if (authUser) {
+  if (user?.email) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
@@ -39,7 +41,7 @@ const RedirectIfAuthenticated: React.FC<{ element: React.ReactElement }> = ({
 
 const router = createBrowserRouter([
   {
-    path: "/register",
+    path: "/register/:id",
     element: <RedirectIfAuthenticated element={<Register />} />,
   },
   {
@@ -49,6 +51,22 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <ProtectedRoute element={<Body />} />,
+  },
+  {
+    path: "/dashboard/:id",
+    element: <ProtectedRoute element={<WorkSpaceDetail />} />,
+  },
+  {
+    path: "/profile",
+    element: <ProtectedRoute element={<Profile />} />,
+  },
+  {
+    path: "/employee-detail/:id",
+    element: <ProtectedRoute element={<EmployeeDetail />} />,
+  },
+  {
+    path: "/unauthorized",
+    element: <div>Unauthorized Access</div>,
   },
 ]);
 

@@ -1,13 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Header from "./Header";
+import Workspace from "../pages/Workspace";
+import EmployeeDashboard from "./Employee/EmployeeDashboard";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 function Body() {
+  const { user } = useSelector((state: any) => state.user);
+
   return (
     <div>
       <Header />
-      Body
+      {user?.role !== "employee" && <Workspace />}
+      {user?.role === "employee" && <EmployeeDashboard />}
     </div>
   );
 }
