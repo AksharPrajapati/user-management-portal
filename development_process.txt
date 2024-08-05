@@ -1,0 +1,103 @@
+# Development Steps
+
+## Project Setup
+
+1. **Create React App with TypeScript:**
+   - Initialized the project using Create React App with TypeScript template for type safety and better development experience. This helps in catching errors early and improving code quality.
+     ```bash
+     npx create-react-app my-app --template typescript
+     ```
+
+2. **Install Dependencies:**
+   - Installed essential dependencies to build a robust and responsive web application:
+     - **Tailwind CSS:** A utility-first CSS framework for rapid UI development. It allows for easy customization and responsive design.
+     - **React Router DOM:** Provides dynamic routing capabilities to navigate between different components and views.
+     - **Redux Toolkit:** Simplifies the process of managing global state, making it easier to maintain and scale the application.
+     - **Axios:** A promise-based HTTP client for making API requests, handling responses, and errors.
+     - **React Toastify:** For displaying toast notifications, providing feedback to users on various actions like success or failure.
+     - **Recharts:** A charting library built with React, providing a variety of customizable charts to visualize data.
+     - **Formik and Yup:** Formik is a library for building forms, and Yup is used for schema validation, ensuring data integrity and user input validation.
+   - Commands used:
+     ```bash
+     npm install tailwindcss react-router-dom @reduxjs/toolkit axios react-toastify recharts formik yup
+     ```
+
+## API Setup
+
+3. **MockAPI Configuration:**
+   - Created an account on MockAPI to simulate backend operations.
+   - Created two collections: `workspaces` and `users` to handle workspace and user data respectively.
+   - Managed all data operations using these two collections due to the limitations of MockAPI, which provides a simple way to create, read, update, and delete data.
+
+## Development Process
+
+4. **Authentication Pages:**
+   - Designed the Register and Login pages using Tailwind CSS for a clean and responsive design.
+   - Integrated MockAPI endpoints using Axios to handle user registration and authentication.
+   - Created initial admin credentials using Postman for testing and setup purposes.
+
+5. **Workspace and User Management:**
+   - **Workspace Management:**
+     - Designed forms for creating and updating workspaces.
+     - Implemented dashboards to display workspace details, using Recharts to visualize data.
+     - Developed detailed pages for viewing and editing specific workspaces.
+   - **User Management:**
+     - Created forms for adding and updating user information.
+     - Developed CRUD operations (Create, Read, Update, Delete) for managing employees within each workspace.
+     - Implemented user-based routing and protected routes to ensure only authorized users can access certain pages.
+     - Admin and workspace users have different levels of access and permissions.
+
+6. **Admin Workflow:**
+   - Admin logs in using provided credentials (email and password).
+   - Admin can create new workspaces, assigning unique credentials (email and password) to each.
+   - Admin can perform CRUD operations on employees within each workspace.
+   - Admin can view and update their profile information.
+
+7. **Workspace User Workflow:**
+   - Workspace users log in using credentials assigned by the admin.
+   - Workspace users can update workspace details and manage employees.
+   - When creating an employee, the workspace is automatically assigned to the employee.
+   - Employee registration involves manually going to the register page and adding the specific ID. Future plans include integrating an email service to automate this process.
+
+8. **Additional Features:**
+   - Implemented filters for:
+     - **Pagination:** To handle large sets of data efficiently.
+     - **Search by Name:** To quickly find specific employees.
+     - **Date Range Filtering:** To filter employees based on their joining date.
+   - Utilized Recharts to create static charts that visualize data trends and metrics.
+   - Managed different views (grid and table) using Redux state management, allowing users to switch views seamlessly.
+   - Added functionality to export employee data to CSV format, enabling easy data sharing and analysis.
+   - Ensured the application is fully responsive, adapting to various screen sizes and devices using Tailwind CSS.
+
+## Code Refactoring
+
+9. **Component Reusability:**
+   - Refactored the codebase to maximize component reusability and maintainability.
+   - Broke down complex components into smaller, reusable pieces.
+   - Ensured consistent coding standards and formatting throughout the project.
+   - Addressed design changes to maintain the application's aesthetic while enhancing functionality.
+
+## Summary
+
+### Project Setup and Initialization
+- **Created React App with TypeScript:** Ensured type safety and improved development experience.
+- **Installed Essential Dependencies:** Tailwind CSS, React Router DOM, Redux Toolkit, Axios, React Toastify, Recharts, Formik, and Yup to build a robust application.
+
+### API and Backend Simulation
+- **MockAPI Configuration:** Created collections for `workspaces` and `users`, simulating backend operations for data management.
+
+### Authentication and User Management
+- **Authentication Pages:** Designed and implemented Register and Login pages using Tailwind CSS and integrated MockAPI for user authentication.
+- **Workspace and User Management:** Developed forms, dashboards, and detailed pages for managing workspaces and users. Implemented user-based routing and protected routes.
+
+### Admin and Workspace User Workflows
+- **Admin Workflow:** Admin can log in, create workspaces, manage employees, and update their profile.
+- **Workspace User Workflow:** Workspace users can log in, update workspace details, manage employees, and handle employee registration.
+
+### Additional Features and Enhancements
+- **Filters and Data Visualization:** Implemented filters for pagination, search, and date range. Used Recharts for data visualization.
+- **Responsive Design and Export Functionality:** Ensured responsiveness using Tailwind CSS and added CSV export functionality.
+- **Code Refactoring:** Focused on component reusability, consistent coding standards, and overall maintainability.
+
+### Final Notes
+During the development process, I faced challenges but adapted and found solutions to meet the requirements. This project demonstrates my proficiency in ReactJS, TypeScript, state management, and responsive design principles. It showcases my ability to handle complex requirements, implement best practices, and deliver a functional and well-structured web application.
