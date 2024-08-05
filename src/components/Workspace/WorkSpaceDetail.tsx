@@ -65,18 +65,20 @@ function WorkSpaceDetail() {
   return (
     <>
       <Header />
+      <p className="text-3xl font-bold mb-4 px-8 pt-8">Workspace</p>
       {workspace === null ? (
         <div className="p-4 text-center">
           <h1 className="text-xl font-semibold">Workspace not found</h1>
         </div>
       ) : (
         (workspace?.id === user?.workspaceId || user?.role === "admin") && (
-          <div className="p-4 md:p-10">
+          <div className="p-0">
             {workspace?.email && (
               <WorkSpaceForm workspace={workspace} user={user} />
             )}
 
-            <div className="mt-4 flex flex-col gap-4">
+            <hr className="mt-4" />
+            <div className="mt-4 flex flex-col gap-4 px-8">
               {user?.role !== "employee" && (
                 <button
                   className="self-end bg-red-600 text-white p-3 rounded-lg hover:bg-red-700 transition-colors"
@@ -86,7 +88,7 @@ function WorkSpaceDetail() {
                 </button>
               )}
 
-              <EmployeeList employee={employee} />
+              {employee.length > 0 && <EmployeeList employee={employee} />}
             </div>
 
             {user?.role !== "employee" && (

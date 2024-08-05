@@ -5,15 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { createUser, createWorkspace, getWorkspaces } from "../utils/helper";
 import { IWorkspace } from "../utils/interface";
 import { toast } from "react-toastify";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 function Workspace() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [workspaces, setWorkspaces] = useState<any>([]);
+  const [loading, setLoading] = useState<any>(false);
 
   const { user } = useSelector((state: any) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {
+    setLoading(true);
     fetchWorkspaces();
   }, []);
 
@@ -35,6 +38,7 @@ function Workspace() {
       );
 
       setWorkspaces(user?.role === "admin" ? response : filteredResponse);
+      setLoading(false);
     } catch (err) {
       console.log(err);
       toast.error("Failed to fetch workspaces");
@@ -64,53 +68,59 @@ function Workspace() {
 
   return (
     <div className="px-4 flex flex-col space-y-4 mt-5">
-      {user?.role === "admin" && (
-        <button
-          className="self-end bg-red-600 text-white py-2 px-4 rounded-lg w-full sm:w-auto hover:bg-red-700 transition duration-300"
-          onClick={handleOpenModal}
-        >
-          + Add Workspace
-        </button>
-      )}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {workspaces?.map((workspace: IWorkspace) => (
-          <div
-            key={workspace.id}
-            className={`p-4 bg-white rounded-lg shadow-lg shadow-gray-500/40 cursor-pointer transition transform hover:scale-105 flex items-center space-x-4 ${
-              workspace.deactive && user?.role !== "admin"
-                ? "opacity-50"
-                : "opacity-100"
-            }`}
-            onClick={() =>
-              !workspace.deactive || user?.role === "admin"
-                ? navigate(`/dashboard/${workspace.id}`)
-                : null
-            }
-          >
-            {workspace.logo ? (
-              <img
-                src={workspace.logo}
-                alt={`${workspace.name} Logo`}
-                className="w-12 h-12 object-cover rounded-full"
-              />
-            ) : (
-              <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center text-gray-600">
-                N/A
-              </div>
-            )}
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          {user?.role === "admin" && (
+            <button
+              className="self-end bg-red-600 text-white py-2 px-4 rounded-lg w-full sm:w-auto hover:bg-red-700 transition duration-300"
+              onClick={handleOpenModal}
+            >
+              + Add Workspace
+            </button>
+          )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {workspaces?.map((workspace: IWorkspace) => (
+              <div
+                key={workspace.id}
+                className={`p-4 bg-white rounded-lg shadow-lg shadow-gray-500/40 cursor-pointer transition transform hover:scale-105 flex items-center space-x-4 ${
+                  workspace.deactive && user?.role !== "admin"
+                    ? "opacity-50"
+                    : "opacity-100"
+                }`}
+                onClick={() =>
+                  !workspace.deactive || user?.role === "admin"
+                    ? navigate(`/dashboard/${workspace.id}`)
+                    : null
+                }
+              >
+                {workspace.logo ? (
+                  <img
+                    src={workspace.logo}
+                    alt={`${workspace.name} Logo`}
+                    className="w-12 h-12 object-cover rounded-full"
+                  />
+                ) : (
+                  <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center text-gray-600">
+                    N/A
+                  </div>
+                )}
 
-            <div className="flex flex-col">
-              <h1 className="text-lg font-semibold">{workspace.name}</h1>
-            </div>
+                <div className="flex flex-col">
+                  <h1 className="text-lg font-semibold">{workspace.name}</h1>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      {user?.role === "admin" && (
-        <WorkspaceModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          onSubmit={handleSubmit}
-        />
+          {user?.role === "admin" && (
+            <WorkspaceModal
+              isOpen={isModalOpen}
+              onClose={handleCloseModal}
+              onSubmit={handleSubmit}
+            />
+          )}
+        </>
       )}
     </div>
   );

@@ -22,7 +22,7 @@ const FormModal: React.FC<FormModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center p-4">
-      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-4xl mx-auto h-full max-h-screen overflow-auto">
+      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-4xl mx-auto max-h-[90vh] overflow-auto">
         <h2 className="text-xl font-semibold mb-4 text-gray-700">Form</h2>
         <Formik
           initialValues={initialValues}

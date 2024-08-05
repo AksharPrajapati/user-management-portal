@@ -80,7 +80,7 @@ function WorkSpaceForm({
   };
 
   return (
-    <div className="p-4 md:p-8">
+    <div className="px-4 md:px-8">
       <Formik
         initialValues={{
           logo: workspace?.logo || "",

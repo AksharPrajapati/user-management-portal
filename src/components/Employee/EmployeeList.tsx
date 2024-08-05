@@ -78,8 +78,8 @@ function EmployeeList({ employee }: { employee: IUser[] }) {
     : filteredData;
 
   return (
-    <div>
-      <p className="text-3xl font-bold mb-4">Employee List</p>
+    <div className="mb-10">
+      <p className="text-3xl font-bold mb-4 pb-4">Employee List</p>
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
         <input
           type="text"
