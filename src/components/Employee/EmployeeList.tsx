@@ -58,6 +58,25 @@ function EmployeeList({ employee }: { employee: IUser[] }) {
     URL.revokeObjectURL(csvUrl);
   };
 
+  const filteredData = employee?.filter((emp: IUser) => {
+    const joinDate = new Date(emp.joiningDate || "");
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    return (
+      (emp?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) &&
+      (selectedDepartment === "" || emp.department === selectedDepartment) &&
+      (startDate ? joinDate >= start : true) &&
+      (endDate ? joinDate <= end : true)
+    );
+  });
+
+  const dataToDisplay = !girdView
+    ? filteredData?.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+      )
+    : filteredData;
+
   return (
     <div>
       <p className="text-3xl font-bold mb-4">Employee List</p>
@@ -138,47 +157,25 @@ function EmployeeList({ employee }: { employee: IUser[] }) {
               </tr>
             </thead>
             <tbody>
-              {employee
-                ?.filter((emp: IUser) => {
-                  const joinDate = new Date(emp.joiningDate || "");
-                  const start = new Date(startDate);
-                  const end = new Date(endDate);
-                  return (
-                    (emp?.name
-                      ?.toLowerCase()
-                      .includes(searchTerm.toLowerCase()) ??
-                      false) &&
-                    (selectedDepartment === "" ||
-                      emp.department === selectedDepartment) &&
-                    (startDate ? joinDate >= start : true) &&
-                    (endDate ? joinDate <= end : true)
-                  );
-                })
-                ?.slice(
-                  (currentPage - 1) * itemsPerPage,
-                  currentPage * itemsPerPage
-                )
-                .map((employee: IUser) => (
-                  <tr key={employee.id} className="border-b">
-                    <td className="py-2 px-4 text-gray-800">{employee.name}</td>
-                    <td className="py-2 px-4 text-gray-800">
-                      {employee.email}
-                    </td>
-                    <td className="py-2 px-4 text-gray-800">
-                      {employee.department}
-                    </td>
-                    <td className="py-2 px-4">
-                      <button
-                        className="text-blue-600 hover:underline"
-                        onClick={() =>
-                          navigate(`/employee-detail/${employee.id}`)
-                        }
-                      >
-                        view
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+              {dataToDisplay.map((employee: IUser) => (
+                <tr key={employee.id} className="border-b">
+                  <td className="py-2 px-4 text-gray-800">{employee.name}</td>
+                  <td className="py-2 px-4 text-gray-800">{employee.email}</td>
+                  <td className="py-2 px-4 text-gray-800">
+                    {employee.department}
+                  </td>
+                  <td className="py-2 px-4">
+                    <button
+                      className="text-blue-600 hover:underline"
+                      onClick={() =>
+                        navigate(`/employee-detail/${employee.id}`)
+                      }
+                    >
+                      view
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
           {totalPages > 1 && (
@@ -217,7 +214,7 @@ function EmployeeList({ employee }: { employee: IUser[] }) {
 
       {girdView && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {employee?.map((employee: IUser) => (
+          {dataToDisplay?.map((employee: IUser) => (
             <div
               key={employee.id}
               className="p-4 border border-gray-200 rounded-lg shadow-lg"
